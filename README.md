@@ -1,9 +1,10 @@
 # pdfium_with_cmake   
 convert pdf  to image    
 
-compile pdfium with cmake.    
+compile pdfium with cmake on Ubuntu.   
 using agg, without V8/xfa     
-using system libjpeg, zlib   
+using libjpeg-turbo (need to install  nasm)  
+using system zlib   
 
 
 
@@ -16,6 +17,16 @@ gclient sync
 cd pdfium
 ```
 
+## 修改代码
+third_party/freetype/src/src/psnames/psmodule.c
+remove first **#include "pstables.h"**
+```C
+// #include "pstables.h"
+#define  DEFINE_PS_TABLES
+#define  DEFINE_PS_TABLES_DATA
+#include "pstables.h"
+```
+
 ## build
 ```
 mkdir out
@@ -23,3 +34,12 @@ cd out
 cmake ..
 make -j4
 ```
+
+## known issue  
+> /usr/bin/ld: libpdfium.so: undefined reference to 'icudt64_dat'
+need define varient with name **icudt64_dat** in your cpp.
+```C++
+const char* icudt64_dat =NULL;
+```
+who can tell me the reason?
+
