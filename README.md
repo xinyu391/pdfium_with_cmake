@@ -35,11 +35,4 @@ cmake ..
 make -j4
 ```
 
-## known issue  
-> /usr/bin/ld: libpdfium.so: undefined reference to 'icudt64_dat'
-need define varient with name **icudt64_dat** in your cpp.
-```C++
-const char* icudt64_dat =NULL;
-```
-who can tell me the reason?
 
